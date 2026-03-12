@@ -37,6 +37,22 @@ El servidor nunca ve tu contenido, la clave de cifrado ni la contraseña — **j
 
 </div>
 
+<div align="center">
+
+### Vista Previa
+
+<img src="img/preview-main.png" alt="zbin vista del editor" width="720" />
+
+<sub>Editor — Crea pastes cifrados con expiración, contraseña y resaltado de sintaxis</sub>
+
+<br/><br/>
+
+<img src="img/preview-decrypt.png" alt="zbin vista de descifrado" width="720" />
+
+<sub>Descifrar — Los pastes protegidos requieren descifrado del lado del cliente</sub>
+
+</div>
+
 ---
 
 ## 🏷️ Palabras Clave

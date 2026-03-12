@@ -37,6 +37,22 @@ The server never sees your content, the encryption key, or the password — **ev
 
 </div>
 
+<div align="center">
+
+### Preview
+
+<img src="img/preview-main.png" alt="zbin editor view" width="720" />
+
+<sub>Editor — Create encrypted pastes with expiration, password protection and syntax highlighting</sub>
+
+<br/><br/>
+
+<img src="img/preview-decrypt.png" alt="zbin decrypt view" width="720" />
+
+<sub>Decrypt — Password-protected pastes require client-side decryption</sub>
+
+</div>
+
 ---
 
 ## 🏷️ Keywords
