@@ -9,8 +9,14 @@ RUN a2enmod rewrite
 # Set working directory
 WORKDIR /var/www/html
 
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
 # Copy application files
 COPY . /var/www/html/
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Create data directory with proper permissions
 RUN mkdir -p /var/www/html/data && \
