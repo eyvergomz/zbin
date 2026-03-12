@@ -1,0 +1,32 @@
+# Dependencies
+vendor/
+node_modules/
+js/node_modules/
+
+# Data storage
+data/
+
+# Configuration (contains sensitive settings)
+cfg/conf.php
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+tst/log/
+js/test-results.xml
+
+# Environment files
+.env
+.env.local
+
+# Claude settings
+.claude/

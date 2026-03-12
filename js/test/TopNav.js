@@ -1,0 +1,808 @@
+'use strict';
+require('../common');
+
+describe('TopNav', function () {
+    describe('showViewButtons & hideViewButtons', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'displays & hides navigation elements for viewing an existing document',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav class="navbar navbar-inverse navbar-static-top">' +
+                    '<div id="navbar" class="navbar-collapse collapse"><ul ' +
+                    'class="nav navbar-nav"><li><button id="newbutton" ' +
+                    'type="button" class="hidden btn btn-warning navbar-btn">' +
+                    '<span class="glyphicon glyphicon-file" aria-hidden="true">' +
+                    '</span> New</button><button id="clonebutton" type="button"' +
+                    ' class="hidden btn btn-warning navbar-btn">' +
+                    '<span class="glyphicon glyphicon-duplicate" ' +
+                    'aria-hidden="true"></span> Clone</button><button ' +
+                    'id="rawtextbutton" type="button" class="hidden btn ' +
+                    'btn-warning navbar-btn"><span class="glyphicon ' +
+                    'glyphicon-text-background" aria-hidden="true"></span> ' +
+                    'Raw text</button><button id="qrcodelink" type="button" ' +
+                    'data-toggle="modal" data-target="#qrcodemodal" ' +
+                    'class="hidden btn btn-warning navbar-btn"><span ' +
+                    'class="glyphicon glyphicon-qrcode" aria-hidden="true">' +
+                    '</span> QR code</button></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    $('#newbutton').hasClass('hidden') &&
+                    $('#clonebutton').hasClass('hidden') &&
+                    $('#rawtextbutton').hasClass('hidden') &&
+                    $('#qrcodelink').hasClass('hidden')
+                );
+                $.Zbin.TopNav.showViewButtons();
+                results.push(
+                    !$('#newbutton').hasClass('hidden') &&
+                    !$('#clonebutton').hasClass('hidden') &&
+                    !$('#rawtextbutton').hasClass('hidden') &&
+                    !$('#qrcodelink').hasClass('hidden')
+                );
+                $.Zbin.TopNav.hideViewButtons();
+                results.push(
+                    $('#newbutton').hasClass('hidden') &&
+                    $('#clonebutton').hasClass('hidden') &&
+                    $('#rawtextbutton').hasClass('hidden') &&
+                    $('#qrcodelink').hasClass('hidden')
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('showCreateButtons & hideCreateButtons', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'displays & hides navigation elements for creating a document',
+            function () { // eslint-disable-line complexity
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li><button id="newbutton" ' +
+                    'type="button" class="hidden">New</button></li><li><a ' +
+                    'id="expiration" href="#" class="hidden">Expiration</a>' +
+                    '</li><li><div id="burnafterreadingoption" class="hidden">' +
+                    'Burn after reading</div></li><li><div id="opendiscussion' +
+                    'option" class="hidden">Open discussion</div></li><li>' +
+                    '<div id="password" class="hidden">Password</div></li>' +
+                    '<li id="attach" class="hidden">Attach a file</li><li>' +
+                    '<a id="formatter" href="#" class="hidden">Format</a>' +
+                    '</li><li><button id="sendbutton" type="button" ' +
+                    'class="hidden">Create</button></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    $('#sendbutton').hasClass('hidden') &&
+                    $('#expiration').hasClass('hidden') &&
+                    $('#formatter').hasClass('hidden') &&
+                    $('#burnafterreadingoption').hasClass('hidden') &&
+                    $('#opendiscussionoption').hasClass('hidden') &&
+                    $('#newbutton').hasClass('hidden') &&
+                    $('#password').hasClass('hidden') &&
+                    $('#attach').hasClass('hidden')
+                );
+                $.Zbin.TopNav.showCreateButtons();
+                results.push(
+                    !$('#sendbutton').hasClass('hidden') &&
+                    !$('#expiration').hasClass('hidden') &&
+                    !$('#formatter').hasClass('hidden') &&
+                    !$('#burnafterreadingoption').hasClass('hidden') &&
+                    !$('#opendiscussionoption').hasClass('hidden') &&
+                    !$('#newbutton').hasClass('hidden') &&
+                    !$('#password').hasClass('hidden') &&
+                    !$('#attach').hasClass('hidden')
+                );
+                $.Zbin.TopNav.hideCreateButtons();
+                results.push(
+                    $('#sendbutton').hasClass('hidden') &&
+                    $('#expiration').hasClass('hidden') &&
+                    $('#formatter').hasClass('hidden') &&
+                    $('#burnafterreadingoption').hasClass('hidden') &&
+                    $('#opendiscussionoption').hasClass('hidden') &&
+                    $('#newbutton').hasClass('hidden') &&
+                    $('#password').hasClass('hidden') &&
+                    $('#attach').hasClass('hidden')
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('showNewPasteButton', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'displays the button for creating a document',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li><button id="newbutton" type=' +
+                    '"button" class="hidden">New</button></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    $('#newbutton').hasClass('hidden')
+                );
+                $.Zbin.TopNav.showNewPasteButton();
+                results.push(
+                    !$('#newbutton').hasClass('hidden')
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('hideCloneButton', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'hides the button for cloning a document',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li><button id="clonebutton" ' +
+                    'type="button" class="btn btn-warning navbar-btn">' +
+                    '<span class="glyphicon glyphicon-duplicate" aria-hidden=' +
+                    '"true"></span> Clone</button></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    !$('#clonebutton').hasClass('hidden')
+                );
+                $.Zbin.TopNav.hideCloneButton();
+                results.push(
+                    $('#clonebutton').hasClass('hidden')
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('hideRawButton', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'hides the raw text button',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li><button ' +
+                    'id="rawtextbutton" type="button" class="btn ' +
+                    'btn-warning navbar-btn"><span class="glyphicon ' +
+                    'glyphicon-text-background" aria-hidden="true"></span> ' +
+                    'Raw text</button></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    !$('#rawtextbutton').hasClass('hidden')
+                );
+                $.Zbin.TopNav.hideRawButton();
+                results.push(
+                    $('#rawtextbutton').hasClass('hidden')
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('hideFileSelector', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'hides the file attachment selection button',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li id="attach" class="hidden ' +
+                    'dropdown"><a href="#" class="dropdown-toggle" data-' +
+                    'toggle="dropdown" role="button" aria-haspopup="true" ' +
+                    'aria-expanded="false">Attach a file <span class="caret">' +
+                    '</span></a><ul class="dropdown-menu"><li id="filewrap">' +
+                    '<div><input type="file" id="file" name="file" /></div>' +
+                    '</li><li id="customattachment" class="hidden"></li><li>' +
+                    '<a id="fileremovebutton"  href="#">Remove attachment</a>' +
+                    '</li></ul></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    !$('#filewrap').hasClass('hidden')
+                );
+                $.Zbin.TopNav.hideFileSelector();
+                results.push(
+                    $('#filewrap').hasClass('hidden')
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('showCustomAttachment', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'display the custom file attachment',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li id="attach" class="hidden ' +
+                    'dropdown"><a href="#" class="dropdown-toggle" data-' +
+                    'toggle="dropdown" role="button" aria-haspopup="true" ' +
+                    'aria-expanded="false">Attach a file <span class="caret">' +
+                    '</span></a><ul class="dropdown-menu"><li id="filewrap">' +
+                    '<div><input type="file" id="file" name="file" /></div>' +
+                    '</li><li id="customattachment" class="hidden"></li><li>' +
+                    '<a id="fileremovebutton"  href="#">Remove attachment</a>' +
+                    '</li></ul></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    $('#customattachment').hasClass('hidden')
+                );
+                $.Zbin.TopNav.showCustomAttachment();
+                results.push(
+                    !$('#customattachment').hasClass('hidden')
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('collapseBar', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'collapses the navigation when displayed on a small screen',
+            function () {
+                const clean = jsdom();
+                let results = [];
+                $('body').html(
+                    '<nav><div class="navbar-header"><button type="button" ' +
+                    'class="navbar-toggle collapsed" data-toggle="collapse" ' +
+                    'data-target="#navbar" aria-expanded="false" aria-controls' +
+                    '="navbar">Toggle navigation</button><a class="reloadlink ' +
+                    'navbar-brand" href=""><img alt="Zbin" ' +
+                    'src="img/icon.svg" width="38" /></a></div><div ' +
+                    'id="navbar"><ul><li><button id="newbutton" type=' +
+                    '"button" class="hidden">New</button></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    $('.navbar-toggle').hasClass('collapsed') &&
+                    $('#navbar').attr('aria-expanded') !== 'true'
+                );
+                $.Zbin.TopNav.collapseBar();
+                results.push(
+                    $('.navbar-toggle').hasClass('collapsed') &&
+                    $('#navbar').attr('aria-expanded') !== 'true'
+                );
+                /*
+                with the upgrade for bootstrap-3.3.7.js to bootstrap-3.4.1.js
+                the mobile interface detection changed to check if the
+                ontouchstart event exists, which broke this section of the test
+                $('.navbar-toggle').trigger('click');
+                results.push(
+                    !$('.navbar-toggle').hasClass('collapsed') &&
+                    $('#navbar').attr('aria-expanded') == 'true'
+                );
+                $.Zbin.TopNav.collapseBar();
+                results.push(
+                    $('.navbar-toggle').hasClass('collapsed') &&
+                    $('#navbar').attr('aria-expanded') == 'false'
+                );
+                */
+                clean();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('resetInput', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'reset inputs to defaults (options off)',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li id="burnafterreadingoption" ' +
+                    'class="hidden"><label><input type="checkbox" ' +
+                    'id="burnafterreading" name="burnafterreading" /> ' +
+                    'Burn after reading</label></li><li id="opendiscussionoption" ' +
+                    'class="hidden"><label><input type="checkbox" ' +
+                    'id="opendiscussion" name="opendiscussion" /> ' +
+                    'Open discussion</label></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    !$.Zbin.TopNav.getBurnAfterReading()
+                );
+                results.push(
+                    !$.Zbin.TopNav.getOpenDiscussion()
+                );
+                $('#burnafterreading').attr('checked', 'checked');
+                $('#opendiscussion').attr('checked', 'checked');
+                results.push(
+                    $.Zbin.TopNav.getBurnAfterReading()
+                );
+                results.push(
+                    $.Zbin.TopNav.getOpenDiscussion()
+                );
+                $.Zbin.TopNav.resetInput();
+                results.push(
+                    !$.Zbin.TopNav.getBurnAfterReading()
+                );
+                results.push(
+                    !$.Zbin.TopNav.getOpenDiscussion()
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+
+        it(
+            'reset inputs to defaults (burnafterreading on)',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li id="burnafterreadingoption" ' +
+                    'class="hidden"><label><input type="checkbox" ' +
+                    'id="burnafterreading" name="burnafterreading" checked="checked" /> ' +
+                    'Burn after reading</label></li><li id="opendiscussionoption" ' +
+                    'class="hidden"><label><input type="checkbox" ' +
+                    'id="opendiscussion" name="opendiscussion" checked="checked" /> ' +
+                    'Open discussion</label></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    $.Zbin.TopNav.getBurnAfterReading()
+                );
+                results.push(
+                    !$.Zbin.TopNav.getOpenDiscussion()
+                );
+                $('#burnafterreading').removeAttr('checked');
+                results.push(
+                    !$.Zbin.TopNav.getBurnAfterReading()
+                );
+                results.push(
+                    !$.Zbin.TopNav.getOpenDiscussion()
+                );
+                $.Zbin.TopNav.resetInput();
+                results.push(
+                    $.Zbin.TopNav.getBurnAfterReading()
+                );
+                results.push(
+                    !$.Zbin.TopNav.getOpenDiscussion()
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+
+        it(
+            'reset inputs to defaults (opendiscussion on)',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li id="burnafterreadingoption" ' +
+                    'class="hidden"><label><input type="checkbox" ' +
+                    'id="burnafterreading" name="burnafterreading" /> ' +
+                    'Burn after reading</label></li><li id="opendiscussionoption" ' +
+                    'class="hidden"><label><input type="checkbox" ' +
+                    'id="opendiscussion" name="opendiscussion" checked="checked" /> ' +
+                    'Open discussion</label></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    !$.Zbin.TopNav.getBurnAfterReading()
+                );
+                results.push(
+                    $.Zbin.TopNav.getOpenDiscussion()
+                );
+                $('#opendiscussion').removeAttr('checked');
+                $('#burnafterreading').prop('checked', true);
+                results.push(
+                    $.Zbin.TopNav.getBurnAfterReading()
+                );
+                results.push(
+                    !$.Zbin.TopNav.getOpenDiscussion()
+                );
+                $.Zbin.TopNav.resetInput();
+                results.push(
+                    !$.Zbin.TopNav.getBurnAfterReading()
+                );
+                results.push(
+                    $.Zbin.TopNav.getOpenDiscussion()
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('getExpiration', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'returns the currently selected expiration date',
+            function () {
+                $('body').html(
+                    '<select id="pasteExpiration" name="pasteExpiration">' +
+                    '<option value="1day">1 day</option>' +
+                    '<option value="never">Never</option></select>'
+                );
+                $.Zbin.TopNav.init();
+                assert.strictEqual($.Zbin.TopNav.getExpiration(), '1day');
+                cleanup();
+            }
+        );
+    });
+
+    describe('getFileList', function () {
+        before(function () {
+            cleanup();
+        });
+
+        const File = window.File,
+            FileList = window.FileList,
+            path = require('path'), // eslint-disable-line global-require
+            mime = require('mime-types'); // eslint-disable-line global-require
+
+        // mocking file input as per https://github.com/jsdom/jsdom/issues/1272
+        function createFile(file_path) {
+            const lastModified = fs.statSync(file_path).mtimeMs;
+
+            return new File(
+                [new fs.readFileSync(file_path)],
+                path.basename(file_path),
+                {
+                    lastModified,
+                    type: mime.lookup(file_path) || ''
+                }
+            );
+        }
+
+        function addFileList(input, file_paths) {
+            if (typeof file_paths === 'string') {
+                file_paths = [file_paths];
+            } else if (!Array.isArray(file_paths)) {
+                throw new Error('file_paths needs to be a file path string or an Array of file path strings');
+            }
+
+            const file_list = file_paths.map(fp => createFile(fp));
+            Object.setPrototypeOf(file_list, Object.create(FileList.prototype));
+
+            Object.defineProperty(input, 'files', {
+                value: file_list,
+                writeable: false
+            });
+
+            return input;
+        }
+
+        it(
+            'returns the selected files',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li id="attach" class="hidden ' +
+                    'dropdown"><a href="#" class="dropdown-toggle" data-' +
+                    'toggle="dropdown" role="button" aria-haspopup="true" ' +
+                    'aria-expanded="false">Attach a file <span class="caret">' +
+                    '</span></a><ul class="dropdown-menu"><li id="filewrap">' +
+                    '<div><input type="file" id="file" name="file" /></div>' +
+                    '</li><li id="customattachment" class="hidden"></li><li>' +
+                    '<a id="fileremovebutton"  href="#">Remove attachment</a>' +
+                    '</li></ul></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    $.Zbin.TopNav.getFileList() === null
+                );
+                addFileList($('#file')[0], [
+                    '../img/logo.svg',
+                    '../img/busy.gif'
+                ]);
+                const files = $.Zbin.TopNav.getFileList();
+                results.push(
+                    files[0].name === 'logo.svg' &&
+                    files[1].name === 'busy.gif'
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('getBurnAfterReading', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'returns if the burn-after-reading checkbox was ticked',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li id="burnafterreadingoption" ' +
+                    'class="hidden"><label><input type="checkbox" ' +
+                    'id="burnafterreading" name="burnafterreading" /> ' +
+                    'Burn after reading</label></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    !$.Zbin.TopNav.getBurnAfterReading()
+                );
+                $('#burnafterreading').attr('checked', 'checked');
+                results.push(
+                    $.Zbin.TopNav.getBurnAfterReading()
+                );
+                $('#burnafterreading').removeAttr('checked');
+                results.push(
+                    !$.Zbin.TopNav.getBurnAfterReading()
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('getOpenDiscussion', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'returns if the open-discussion checkbox was ticked',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li id="opendiscussionoption" ' +
+                    'class="hidden"><label><input type="checkbox" ' +
+                    'id="opendiscussion" name="opendiscussion" /> ' +
+                    'Open discussion</label></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    !$.Zbin.TopNav.getOpenDiscussion()
+                );
+                $('#opendiscussion').attr('checked', 'checked');
+                results.push(
+                    $.Zbin.TopNav.getOpenDiscussion()
+                );
+                $('#opendiscussion').removeAttr('checked');
+                results.push(
+                    !$.Zbin.TopNav.getOpenDiscussion()
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('getPassword', function () {
+        before(function () {
+            cleanup();
+        });
+
+        jsc.property(
+            'returns the contents of the password input',
+            'string',
+            function (password) {
+                password = password.replace(/\r+|\n+/g, '');
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li><div id="password" ' +
+                    'class="navbar-form hidden"><input type="password" ' +
+                    'id="passwordinput" placeholder="Password (recommended)" ' +
+                    'class="form-control" size="23" /></div></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    $.Zbin.TopNav.getPassword() === ''
+                );
+                $('#passwordinput').val(password);
+                results.push(
+                    $.Zbin.TopNav.getPassword() === password
+                );
+                $('#passwordinput').val('');
+                results.push(
+                    $.Zbin.TopNav.getPassword() === ''
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                return result;
+            }
+        );
+    });
+
+    describe('getCustomAttachment', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'returns the custom attachment element',
+            function () {
+                let results = [];
+                $('body').html(
+                    '<nav><div id="navbar"><ul><li id="attach" class="hidden ' +
+                    'dropdown"><a href="#" class="dropdown-toggle" data-' +
+                    'toggle="dropdown" role="button" aria-haspopup="true" ' +
+                    'aria-expanded="false">Attach a file <span class="caret">' +
+                    '</span></a><ul class="dropdown-menu"><li id="filewrap">' +
+                    '<div><input type="file" id="file" name="file" /></div>' +
+                    '</li><li id="customattachment" class="hidden"></li><li>' +
+                    '<a id="fileremovebutton"  href="#">Remove attachment</a>' +
+                    '</li></ul></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                results.push(
+                    !$.Zbin.TopNav.getCustomAttachment().hasClass('test')
+                );
+                $('#customattachment').addClass('test');
+                results.push(
+                    $.Zbin.TopNav.getCustomAttachment().hasClass('test')
+                );
+                cleanup();
+                const result = results.every(element => element);
+                if (!result) {
+                    console.log(results);
+                }
+                assert.ok(result);
+            }
+        );
+    });
+
+    describe('hideAllButtons', function () {
+        before(function () {
+            cleanup();
+        });
+
+        it(
+            'hides all buttons correctly',
+            function () {
+                // Insert any setup code needed for the hideAllButtons function
+                // Example: Initialize the DOM elements required for testing
+                $('body').html(
+                    '<nav class="navbar navbar-inverse navbar-static-top">' +
+                    '<div id="navbar" class="navbar-collapse collapse"><ul ' +
+                    'class="nav navbar-nav"><li><button id="newbutton" ' +
+                    'type="button" class="hidden btn btn-warning navbar-btn">' +
+                    '<span class="glyphicon glyphicon-file" aria-hidden="true">' +
+                    '</span> New</button><button id="clonebutton" type="button"' +
+                    ' class="hidden btn btn-warning navbar-btn">' +
+                    '<span class="glyphicon glyphicon-duplicate" ' +
+                    'aria-hidden="true"></span> Clone</button><button ' +
+                    'id="rawtextbutton" type="button" class="hidden btn ' +
+                    'btn-warning navbar-btn"><span class="glyphicon ' +
+                    'glyphicon-text-background" aria-hidden="true"></span> ' +
+                    'Raw text</button><button id="qrcodelink" type="button" ' +
+                    'data-toggle="modal" data-target="#qrcodemodal" ' +
+                    'class="hidden btn btn-warning navbar-btn"><span ' +
+                    'class="glyphicon glyphicon-qrcode" aria-hidden="true">' +
+                    '</span> QR code</button></li></ul></div></nav>'
+                );
+                $.Zbin.TopNav.init();
+                $.Zbin.TopNav.hideAllButtons();
+
+                assert.ok($('#newbutton').hasClass('hidden'));
+                assert.ok($('#clonebutton').hasClass('hidden'));
+                assert.ok($('#rawtextbutton').hasClass('hidden'));
+                assert.ok($('#qrcodelink').hasClass('hidden'));
+                cleanup();
+            }
+        );
+    });
+
+    describe('rawText', function () {
+        before(function () {
+            cleanup();
+        });
+
+        // TODO triggers error messages in jsDOM since version 12, but passes
+        it(
+            'displays raw text view correctly',
+            function () {
+                const clean = jsdom('', {url: 'https://zbin.net/?0123456789abcdef#1'});
+                $('body').html('<button id="rawtextbutton"></button>');
+                const sample = 'example';
+                $.Zbin.PasteViewer.setText(sample);
+                $.Zbin.Helper.reset();
+                $.Zbin.TopNav.init();
+                $('#rawtextbutton').click();
+                assert.strictEqual($('pre').text(), sample);
+                clean();
+            }
+        );
+    });
+});

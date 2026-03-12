@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 60" width="260" height="60">
+  <!-- zbin logo with hexagon keyhole icon -->
+  <g transform="translate(30, 30)">
+    <!-- Hexagon -->
+    <polygon points="0,-24 20.8,-12 20.8,12 0,24 -20.8,12 -20.8,-12"
+      fill="#f0f1f5" stroke="#2d2d2d" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- Keyhole circle -->
+    <circle cx="0" cy="-4" r="5" fill="none" stroke="#2d2d2d" stroke-width="2.2"/>
+    <!-- Keyhole bottom -->
+    <path d="M-3,0 L-3.5,11 L3.5,11 L3,0" fill="none" stroke="#2d2d2d" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <!-- Text "zbin" -->
+  <text x="68" y="40" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif"
+    font-size="36" font-weight="600" fill="#2d2d2d" letter-spacing="-0.5">zbin</text>
+</svg>

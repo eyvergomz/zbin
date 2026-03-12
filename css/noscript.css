@@ -1,0 +1,13 @@
+/**
+ * Zbin
+ *
+ * Cascading style sheet only loaded when JavaScript is not available.
+ *
+
+
+ * 
+ */
+
+.noscript-hide {
+	display: none;
+}
